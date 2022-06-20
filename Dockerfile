@@ -19,6 +19,11 @@ WORKDIR /app
 
 # Using pip:
 COPY requirements.txt /app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 RUN python3 -m pip install -r requirements.txt
 
 ADD . /app
