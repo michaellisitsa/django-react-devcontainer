@@ -4,7 +4,7 @@ services:
     build: .
     # load connection strings / secrets from the .env file
     env_file: 
-      - .env
+      - ./.env.dev
     ports:
       - 8000:8000
     links: 

@@ -17,13 +17,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+ob9@xcz)xi=enyx87&(=m@ge)bfi(o=+z!b60wp*7relf9a(6'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
-AZURE_APPSERVICE_HOSTNAME = os.environ.get('APPSETTING_WEBSITE_SITE_NAME', '')
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{AZURE_APPSERVICE_HOSTNAME}.azurewebsites.net"]
+# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
+# For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
+
+# AZURE_APPSERVICE_HOSTNAME = os.environ.get('APPSETTING_WEBSITE_SITE_NAME', '')
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -128,9 +130,9 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Configure django-storages from environment variables if account name is set
-if 'AZURE_ACCOUNT_NAME' in os.environ:
-    DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-    STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-    AZURE_ACCOUNT_NAME=os.environ['AZURE_ACCOUNT_NAME']
-    AZURE_ACCOUNT_KEY=os.environ['AZURE_ACCOUNT_KEY']
-    AZURE_CONTAINER=os.environ['AZURE_CONTAINER']
+# if 'AZURE_ACCOUNT_NAME' in os.environ:
+#     DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+#     STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+#     AZURE_ACCOUNT_NAME=os.environ['AZURE_ACCOUNT_NAME']
+#     AZURE_ACCOUNT_KEY=os.environ['AZURE_ACCOUNT_KEY']
+#     AZURE_CONTAINER=os.environ['AZURE_CONTAINER']

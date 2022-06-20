@@ -6,7 +6,7 @@ ADD frontend /nodebuild
 # Set environment variables from .env during node build
 # so that the app uses the production location for static files
 ADD .env /nodebuild
-RUN export $(grep -v '^#' .env | xargs) && npm install && npm run build
+RUN export $(grep -v '^#' .env.dev | xargs) && npm install && npm run build
 
 FROM tiangolo/uwsgi-nginx
 
@@ -32,5 +32,5 @@ COPY --from=0 /nodebuild/build /app/frontend/build
 
 # Set environment variables from .env during collect static
 # so that the app uses the production location for static files
-RUN export $(grep -v '^#' .env | xargs) && python3 manage.py collectstatic --noinput
+RUN export $(grep -v '^#' .env.dev | xargs) && python3 manage.py collectstatic --noinput
 RUN rm .env
